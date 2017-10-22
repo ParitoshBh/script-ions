@@ -18,6 +18,7 @@ Removes the following files from each directory
 1. Or Download the repository zip [from here](https://github.com/ParitoshBh/script-ions/archive/master.zip) (and extract)
 1. Navigate to the repository directory
 1. Open `cleaner.py` file in any text editor and replace the text `PHOTOS PATH GOES HERE` with the absolute path of your google photos directory. Eg. `/home/YOUR_USER/Downloads/takeout-20170922T014548Z-001/Takeout/Google Photos`
+1. Run the script by executing `python3 cleaner.py`
 
 _Note that the script should be used with caution. It will permanently delete files and they will not be recoverable_
 
