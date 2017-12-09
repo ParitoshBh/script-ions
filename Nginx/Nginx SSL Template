@@ -1,0 +1,68 @@
+# Redirect both (http/https) www. to non www.
+server {
+    listen    80;
+    listen    [::]:80;
+  
+    listen    443 ssl;
+    listen    [::]:443 ssl;
+  
+    server_name   www.example.com;
+
+    return 301    $scheme://example.com$request_uri;
+}
+
+# Redirect non www. http traffic to non www. https
+server {
+    listen    80;
+    listen    [::]:80;
+  
+    server_name   example.com;
+  
+    return 301    https://example.com$request_uri;
+}
+
+# Serve non www. website over https
+server {
+    listen    443 ssl;
+    listen    [::]:443 ssl;
+
+    ssl_certificate   /etc/ssl/certs/example.com.pem;
+    ssl_certificate_key   /etc/ssl/private/example.com.key;
+
+    server_name   example.com;
+
+    root  /home/example/apps/site;
+
+    server_tokens off;
+
+    # Add index.php to the list if you are using PHP
+    index index.php index.html;
+
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+
+        # With php7.0-fpm:
+        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    location ~ /\.ht {
+        deny all;
+    }
+
+    # for letsencrypt domain name renewal
+    location ~ /.well-known {
+        allow all;
+    }
+
+}
