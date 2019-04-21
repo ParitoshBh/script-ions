@@ -1,0 +1,103 @@
+---
+# tasks file for personal_laptop
+- name: Install git, curl, zsh, transmission packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - git
+    - curl
+    - zsh
+    - transmission
+
+- name: Clone oh-my-zsh
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git
+       dest=/home/paritosh/.oh-my-zsh
+       update=no
+  become_user: paritosh
+  become: true
+
+- name: Install Nextcloud desktop client repo (apt)
+  apt_repository:
+    repo: ppa:nextcloud-devs/client
+    filename: nextcloud
+    state: present
+
+- name: Install Nextcloud desktop client
+  apt:
+    pkg: nextcloud-client
+    state: present
+    update_cache: true
+
+# - name: Copy .zshrc from cloned repository
+#   copy: src=/home/paritosh/.oh-my-zsh/templates/zshrc.zsh-template
+#         dest=/home/paritosh/.zshrc
+#         force=yes
+#   become_user: paritosh
+#   become: true
+
+# - name: Change user shell to zsh
+#   command: chsh -s /bin/zsh paritosh
+
+- name: Install Key For Sublime Text 3
+  apt_key:
+    url: 'https://download.sublimetext.com/sublimehq-pub.gpg'
+    state: present
+
+- name: Install Sublime Text 3 Repo (apt)
+  apt_repository:
+    repo: deb https://download.sublimetext.com/ apt/stable/
+    filename: sublime-text
+    state: present
+
+- name: Install Sublime Text 3
+  apt:
+    pkg: sublime-text
+    state: present
+    update_cache: true
+
+# VSCodium - Open source version of VSCode
+- name: Install Key For VSCodium
+  apt_key:
+    url: 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg'
+    state: present
+
+- name: Install VSCodium Repo (apt)
+  apt_repository:
+    repo: deb https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/repos/debs/ vscodium main
+    filename: vscodium
+    state: present
+
+- name: Install VSCodium
+  apt:
+    pkg: vscodium
+    state: present
+    update_cache: true
+
+# Virtual machine manager
+- name: Install Virt Manager
+  apt:
+    pkg: virt-manager
+    state: present
+    update_cache: true
+
+# Transmission remote for managing torrents on server
+- name: Install Transmission Remote
+  apt:
+    pkg: transmission-remote-gtk
+    state: present
+    update_cache: true
+
+# Process managing utility
+- name: Install htop Utility
+  apt:
+    pkg: htop
+    state: present
+    update_cache: true
+
+# Chromium web browser
+- name: Install Chromium Browser
+  apt:
+    pkg: chromium-browser
+    state: present
+    update_cache: true
