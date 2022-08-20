@@ -1,6 +1,6 @@
 Executing `build.sh` on an arm64 machine will generate an arm64 `.deb` file of Insomnia (Core). This is a temporary script hacked together till the time Insomnia team figure out a way to incorporate arm64 builds in its build process.
 
-There's an (open (draft) PR)[https://github.com/Kong/insomnia/pull/4762] for it already.
+There's an [open (draft) PR](https://github.com/Kong/insomnia/pull/4762) for it already.
 
 ### Requirements
 1. Docker
